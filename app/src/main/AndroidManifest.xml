@@ -16,6 +16,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".TermListView" />
+        <activity android:name=".TermDetails" />
+        <activity android:name=".CourseListView" />
+        <activity android:name=".CourseDetails" />
+        <activity android:name=".AssessmentListView" />
+        <activity android:name=".AssessmentDetails"></activity>
     </application>
 
 </manifest>
