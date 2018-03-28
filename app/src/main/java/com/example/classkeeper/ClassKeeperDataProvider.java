@@ -13,7 +13,7 @@ import android.net.Uri;
  */
 
 public class ClassKeeperDataProvider extends ContentProvider{
-  private static final String AUTH = "com.example.classkeeper.provider";
+  private static final String AUTH = "com.example.classkeeper.classkeeperdataprovider";
   private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
   private static final int TERM_CODE = 1;
   private static final int TERM_ID_CODE = 2;
@@ -49,6 +49,27 @@ public class ClassKeeperDataProvider extends ContentProvider{
     uriMatcher.addURI(AUTH, ClassKeeperDBSchema.AssessmentAlertsTable.NAME + "/#", 14);
   }
 
+  private String[] getColumnNamesByTableName(String tableName) {
+    switch(tableName) {
+      case ClassKeeperDBSchema.TermTable.NAME:
+        return ClassKeeperDBSchema.TermTable.Columns.names;
+      case ClassKeeperDBSchema.CourseTable.NAME:
+        return ClassKeeperDBSchema.CourseTable.Columns.names;
+      case ClassKeeperDBSchema.AssessmentTable.NAME:
+        return ClassKeeperDBSchema.AssessmentTable.Columns.names;
+      case ClassKeeperDBSchema.NoteTable.NAME:
+        return ClassKeeperDBSchema.NoteTable.Columns.names;
+      case ClassKeeperDBSchema.MentorTable.NAME:
+        return ClassKeeperDBSchema.MentorTable.Columns.names;
+      case ClassKeeperDBSchema.CourseAlertsTable.NAME:
+        return ClassKeeperDBSchema.CourseAlertsTable.Columns.names;
+      case ClassKeeperDBSchema.AssessmentAlertsTable.NAME:
+        return ClassKeeperDBSchema.AssessmentAlertsTable.Columns.names;
+      default:
+        throw new IllegalArgumentException("Table not found when trying to get column names: " + tableName);
+    }
+  }
+
   @Override
   public boolean onCreate() {
     ClassKeeperDBHelper dbHelper = new ClassKeeperDBHelper(getContext());
@@ -62,13 +83,13 @@ public class ClassKeeperDataProvider extends ContentProvider{
   }
 
   private Cursor getTableCursor(String selection, String tableName, String primaryKeyName) {
-    return db.query(tableName, ClassKeeperDBSchema.getColumnNames(tableName),
+    return db.query(tableName, getColumnNamesByTableName(tableName),
             selection, null, null, null,
             primaryKeyName + " ASC");
   }
 
   private Cursor getTableIDCursor(Uri uri, String tableName, String primaryKeyName) {
-    return db.query(tableName, ClassKeeperDBSchema.getColumnNames(tableName),
+    return db.query(tableName, getColumnNamesByTableName(tableName),
             primaryKeyName + "=" + uri.getLastPathSegment(),
             null, null, null,
             primaryKeyName + " ASC");

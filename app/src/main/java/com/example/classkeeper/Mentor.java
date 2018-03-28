@@ -21,7 +21,7 @@ public class Mentor {
         return this.id;
     }
 
-    public int courseID() {
+    public int getCourseID() {
         return this.courseID;
     }
 
@@ -29,7 +29,7 @@ public class Mentor {
         return this.name;
     }
 
-    public String phoneNumber() {
+    public String getPhoneNumber() {
        return this.phoneNumber;
     }
 }

@@ -17,6 +17,12 @@ public class Term {
        this.end = end;
     }
 
+    public Term(String title, String start, String end) {
+        this.title = title;
+        this.start = start;
+        this.end = end;
+    }
+
     public int getID() {
         return this.id;
     }

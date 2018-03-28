@@ -9,50 +9,6 @@ import java.lang.reflect.Modifier;
  */
 
 public class ClassKeeperDBSchema {
-
-    public static String[] getColumnNames(String tableName) {
-        Class columnClass = getColumnClassByTableName(tableName);
-        Field[] columnFields = columnClass.getDeclaredFields();
-        String[] columnNames = new String[columnFields.length];
-        int index = 0;
-        for(Field field : columnFields) {
-            if (Modifier.isStatic(field.getModifiers())) {
-                columnNames[index] = field.getName();
-            }
-        }
-        return columnNames;
-    }
-
-    public static Class getColumnClassByTableName(String tableName) {
-        Class table;
-        switch(tableName) {
-            case TermTable.NAME:
-                table = TermTable.Columns.class;
-                break;
-            case CourseTable.NAME:
-                table = CourseTable.Columns.class;
-                break;
-            case AssessmentTable.NAME:
-                table = AssessmentTable.Columns.class;
-                break;
-            case NoteTable.NAME:
-                table = NoteTable.Columns.class;
-                break;
-            case MentorTable.NAME:
-                table = MentorTable.Columns.class;
-                break;
-            case CourseAlertsTable.NAME:
-                table = CourseAlertsTable.Columns.class;
-                break;
-            case AssessmentAlertsTable.NAME:
-                table = AssessmentAlertsTable.Columns.class;
-                break;
-            default:
-                table = null;
-        }
-        return table;
-    }
-
     public static final class TermTable {
         public static final String NAME = "terms";
 
@@ -61,6 +17,7 @@ public class ClassKeeperDBSchema {
             public static final String TITLE = "title";
             public static final String START = "start";
             public static final String END = "end";
+            public static final String[] names = {ID, TITLE, START, END};
         }
 
         public static final String CREATE_TABLE =
@@ -68,8 +25,7 @@ public class ClassKeeperDBSchema {
                         Columns.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         Columns.TITLE + " TEXT, " +
                         Columns.START + " DATE, " +
-                        Columns.END + " DATE, " +
-                    ")";
+                        Columns.END + " DATE)";
 
     }
 
@@ -83,6 +39,7 @@ public class ClassKeeperDBSchema {
             public static final String START = "start";
             public static final String END = "end";
             public static final String STATUS = "status";
+            public static final String[] names = {ID, TERM_ID, TITLE, START, END, STATUS};
         }
 
         public static final String CREATE_TABLE =
@@ -108,6 +65,7 @@ public class ClassKeeperDBSchema {
             public static final String TYPE = "type";
             public static final String TITLE = "title";
             public static final String DUE_DATE = "dueDate";
+            public static final String[] names = {ID, COURSE_ID, TITLE, TYPE, DUE_DATE};
         }
 
         public static final String CREATE_TABLE =
@@ -130,6 +88,7 @@ public class ClassKeeperDBSchema {
             public static final String ID = "id";
             public static final String COURSE_ID = "courseID";
             public static final String CONTENT = "content";
+            public static final String[] names = {ID, COURSE_ID, CONTENT};
         }
 
         public static final String CREATE_TABLE =
@@ -151,6 +110,7 @@ public class ClassKeeperDBSchema {
             public static final String COURSE_ID = "courseID";
             public static final String NAME = "name";
             public static final String PHONE_NUMBER = "phoneNumber";
+            public static final String[] names = {ID, COURSE_ID, NAME, PHONE_NUMBER};
         }
 
         public static final String CREATE_TABLE =
@@ -173,6 +133,7 @@ public class ClassKeeperDBSchema {
             public static final String COURSE_ID = "courseID";
             public static final String DATE = "date";
             public static final String MESSAGE = "message";
+            public static final String[] names = {ID, COURSE_ID, DATE, MESSAGE};
         }
 
         public static final String CREATE_TABLE =
@@ -195,6 +156,7 @@ public class ClassKeeperDBSchema {
             public static final String ASSESSMENT_ID = "assessmentID";
             public static final String DATE = "date";
             public static final String MESSAGE = "message";
+            public static final String[] names = {ID, ASSESSMENT_ID, DATE, MESSAGE};
         }
 
         public static final String CREATE_TABLE =
