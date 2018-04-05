@@ -21,6 +21,15 @@ public class Course {
        this.status = status;
     }
 
+    public Course(int termID, String title, String start, String end, String status) {
+        this.id = id;
+        this.termID = termID;
+        this.title = title;
+        this.start = start;
+        this.end = end;
+        this.status = status;
+    }
+
     public int getID() {
         return this.id;
     }

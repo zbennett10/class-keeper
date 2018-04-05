@@ -15,6 +15,11 @@ public class Note {
      this.content = content;
    }
 
+   public Note(int courseID, String content) {
+        this.courseID = courseID;
+        this.content = content;
+   }
+
    public int getID() {
        return this.id;
    }

@@ -39,9 +39,6 @@ public class DatabaseQueryBank {
 
    public static ArrayList<Term> getTerms(Context context) {
       ArrayList<Term> terms = new ArrayList<Term>();
-      for(String name : ClassKeeperDBSchema.TermTable.Columns.names) {
-         System.out.println(name);
-      }
       Cursor cursor = context.getContentResolver()
                              .query(TERMS_TABLE_URI, ClassKeeperDBSchema.TermTable.Columns.names,
                                      null, null, null );
@@ -70,6 +67,15 @@ public class DatabaseQueryBank {
                     .insert(TERMS_TABLE_URI, insertionValues);
    }
 
+   public static int updateTerm(Context context, Term term) {
+      ContentValues insertionValues = new ContentValues();
+      insertionValues.put(ClassKeeperDBSchema.TermTable.Columns.TITLE, term.getTitle());
+      insertionValues.put(ClassKeeperDBSchema.TermTable.Columns.START, term.getStart());
+      insertionValues.put(ClassKeeperDBSchema.TermTable.Columns.END, term.getStart());
+      return context.getContentResolver()
+              .update(TERMS_TABLE_URI, insertionValues, ClassKeeperDBSchema.TermTable.Columns.ID + " = " + term.getID(), null);
+   }
+
    public static boolean deleteTermByID(Context context, int termID) {
       //make sure term is not delete if courses are assigned
       Cursor courseCursor = context.getContentResolver()
@@ -93,13 +99,38 @@ public class DatabaseQueryBank {
       Course course = new Course(
               courseID,
               cursor.getInt(cursor.getColumnIndex(ClassKeeperDBSchema.CourseTable.Columns.TERM_ID)),
-              cursor.getString(cursor.getColumnIndex(ClassKeeperDBSchema.CourseTable.Columns.STATUS)),
               cursor.getString(cursor.getColumnIndex(ClassKeeperDBSchema.CourseTable.Columns.TITLE)),
               cursor.getString(cursor.getColumnIndex(ClassKeeperDBSchema.CourseTable.Columns.START)),
-              cursor.getString(cursor.getColumnIndex(ClassKeeperDBSchema.CourseTable.Columns.END))
+              cursor.getString(cursor.getColumnIndex(ClassKeeperDBSchema.CourseTable.Columns.END)),
+              cursor.getString(cursor.getColumnIndex(ClassKeeperDBSchema.CourseTable.Columns.STATUS))
       );
       cursor.close();
       return course;
+   }
+
+   public static ArrayList<Course> getAllCoursesWithTermID(Context context, int termID) {
+      ArrayList<Course> courses = new ArrayList<Course>();
+      Cursor cursor = context.getContentResolver()
+              .query(COURSE_TABLE_URI, ClassKeeperDBSchema.CourseTable.Columns.names,
+                      null, null, null );
+      if(cursor != null) {
+         while(cursor.moveToNext()) {
+            int currentCourseTermID = cursor.getInt(cursor.getColumnIndex(ClassKeeperDBSchema.CourseTable.Columns.TERM_ID));
+            if(currentCourseTermID == termID) {
+               Course course = new Course(
+                       cursor.getInt(cursor.getColumnIndex(ClassKeeperDBSchema.CourseTable.Columns.ID)),
+                       currentCourseTermID,
+                       cursor.getString(cursor.getColumnIndex(ClassKeeperDBSchema.CourseTable.Columns.TITLE)),
+                       cursor.getString(cursor.getColumnIndex(ClassKeeperDBSchema.CourseTable.Columns.START)),
+                       cursor.getString(cursor.getColumnIndex(ClassKeeperDBSchema.CourseTable.Columns.END)),
+                       cursor.getString(cursor.getColumnIndex(ClassKeeperDBSchema.CourseTable.Columns.STATUS))
+               );
+               courses.add(course);
+            }
+         }
+      }
+      cursor.close();
+      return courses;
    }
 
    public static Uri insertCourse(Context context, Course course) {
@@ -111,6 +142,16 @@ public class DatabaseQueryBank {
       insertionValues.put(ClassKeeperDBSchema.CourseTable.Columns.STATUS, course.getStatus());
       return context.getContentResolver()
               .insert(COURSE_TABLE_URI, insertionValues);
+   }
+
+   public static int updateCourse(Context context, Course course) {
+      ContentValues insertionValues = new ContentValues();
+      insertionValues.put(ClassKeeperDBSchema.CourseTable.Columns.TITLE, course.getTitle());
+      insertionValues.put(ClassKeeperDBSchema.CourseTable.Columns.START, course.getStart());
+      insertionValues.put(ClassKeeperDBSchema.CourseTable.Columns.END, course.getEnd());
+      insertionValues.put(ClassKeeperDBSchema.CourseTable.Columns.STATUS, course.getStatus());
+      return context.getContentResolver()
+              .update(COURSE_TABLE_URI, insertionValues, ClassKeeperDBSchema.CourseTable.Columns.ID + " = " + course.getID(), null);
    }
 
    public static boolean deleteCourseByID(Context context, int courseID) {
@@ -158,7 +199,7 @@ public class DatabaseQueryBank {
 
    public static Assessment getAssessment(Context context, int assessmentID) {
       Cursor cursor = context.getContentResolver()
-              .query(COURSE_TABLE_URI, ClassKeeperDBSchema.AssessmentTable.Columns.names,
+              .query(ASSESSMENT_TABLE_URI, ClassKeeperDBSchema.AssessmentTable.Columns.names,
                       ClassKeeperDBSchema.AssessmentTable.Columns.ID + " = " + assessmentID, null, null);
       cursor.moveToFirst();
       Assessment assessment = new Assessment(
@@ -172,6 +213,31 @@ public class DatabaseQueryBank {
       return assessment;
    }
 
+   public static ArrayList<Assessment> getAllAssessmentsWithCourseID(Context context, int courseID) {
+      ArrayList<Assessment> assessments = new ArrayList<Assessment>();
+      Cursor cursor = context.getContentResolver()
+              .query(ASSESSMENT_TABLE_URI, ClassKeeperDBSchema.AssessmentTable.Columns.names,
+                      null, null, null );
+      if(cursor != null) {
+         while(cursor.moveToNext()) {
+            int currentAssessmentCourseID = cursor.getInt(cursor.getColumnIndex(ClassKeeperDBSchema.AssessmentTable.Columns.COURSE_ID));
+            if(currentAssessmentCourseID == courseID) {
+               Assessment assessment = new Assessment(
+                       cursor.getInt(cursor.getColumnIndex(ClassKeeperDBSchema.AssessmentTable.Columns.ID)),
+                       currentAssessmentCourseID,
+                       cursor.getString(cursor.getColumnIndex(ClassKeeperDBSchema.AssessmentTable.Columns.TYPE)),
+                       cursor.getString(cursor.getColumnIndex(ClassKeeperDBSchema.AssessmentTable.Columns.TITLE)),
+                       cursor.getString(cursor.getColumnIndex(ClassKeeperDBSchema.AssessmentTable.Columns.DUE_DATE))
+
+               );
+               assessments.add(assessment);
+            }
+         }
+      }
+      cursor.close();
+      return assessments;
+   }
+
    public static Uri insertAssessment(Context context, Assessment assessment) {
       ContentValues insertionValues = new ContentValues();
       insertionValues.put(ClassKeeperDBSchema.AssessmentTable.Columns.COURSE_ID, assessment.getCourseID());
@@ -180,6 +246,15 @@ public class DatabaseQueryBank {
       insertionValues.put(ClassKeeperDBSchema.AssessmentTable.Columns.DUE_DATE, assessment.getDueDate());
       return context.getContentResolver()
               .insert(ASSESSMENT_TABLE_URI, insertionValues);
+   }
+
+   public static int updateAssessment(Context context, Assessment assessment) {
+      ContentValues insertionValues = new ContentValues();
+      insertionValues.put(ClassKeeperDBSchema.AssessmentTable.Columns.TITLE, assessment.getTitle());
+      insertionValues.put(ClassKeeperDBSchema.AssessmentTable.Columns.TYPE, assessment.getType());
+      insertionValues.put(ClassKeeperDBSchema.AssessmentTable.Columns.DUE_DATE, assessment.getDueDate());
+      return context.getContentResolver()
+              .update(ASSESSMENT_TABLE_URI, insertionValues, ClassKeeperDBSchema.AssessmentTable.Columns.ID + " = " + assessment.getID(), null);
    }
 
    public static boolean deleteAssessmentByID(Context context, int assessmentID) {
@@ -210,12 +285,41 @@ public class DatabaseQueryBank {
       return note;
    }
 
+   public static ArrayList<Note> getAllNotesWithCourseID(Context context, int courseID) {
+      ArrayList<Note> notes = new ArrayList<Note>();
+      Cursor cursor = context.getContentResolver()
+              .query(NOTE_TABLE_URI, ClassKeeperDBSchema.NoteTable.Columns.names,
+                      null, null, null );
+      if(cursor != null) {
+         while(cursor.moveToNext()) {
+            int currentCourseID = cursor.getInt(cursor.getColumnIndex(ClassKeeperDBSchema.NoteTable.Columns.COURSE_ID));
+            if(currentCourseID == courseID) {
+               Note note = new Note(
+                       cursor.getInt(cursor.getColumnIndex(ClassKeeperDBSchema.NoteTable.Columns.ID)),
+                       courseID,
+                       cursor.getString(cursor.getColumnIndex(ClassKeeperDBSchema.NoteTable.Columns.CONTENT))
+               );
+               notes.add(note);
+            }
+         }
+      }
+      cursor.close();
+      return notes;
+   }
+
    public static Uri insertNote(Context context, Note note) {
       ContentValues insertionValues = new ContentValues();
       insertionValues.put(ClassKeeperDBSchema.NoteTable.Columns.COURSE_ID, note.getCourseID());
       insertionValues.put(ClassKeeperDBSchema.NoteTable.Columns.CONTENT, note.getContent());
       return context.getContentResolver()
               .insert(NOTE_TABLE_URI, insertionValues);
+   }
+
+   public static int updateNote(Context context, Note note) {
+      ContentValues insertionValues = new ContentValues();
+      insertionValues.put(ClassKeeperDBSchema.NoteTable.Columns.CONTENT, note.getContent());
+      return context.getContentResolver()
+              .update(NOTE_TABLE_URI, insertionValues, ClassKeeperDBSchema.NoteTable.Columns.ID + " = " + note.getID(), null);
    }
 
    public static boolean deleteNoteByID(Context context, int noteID) {
@@ -239,6 +343,29 @@ public class DatabaseQueryBank {
       return mentor;
    }
 
+   public static ArrayList<Mentor> getAllMentorsWithCourseID(Context context, int courseID) {
+      ArrayList<Mentor> mentors = new ArrayList<Mentor>();
+      Cursor cursor = context.getContentResolver()
+              .query(MENTOR_TABLE_URI, ClassKeeperDBSchema.MentorTable.Columns.names,
+                      null, null, null );
+      if(cursor != null) {
+         while(cursor.moveToNext()) {
+            int currentMentorCourseID = cursor.getInt(cursor.getColumnIndex(ClassKeeperDBSchema.MentorTable.Columns.COURSE_ID));
+            if(currentMentorCourseID == courseID) {
+               Mentor mentor = new Mentor(
+                       cursor.getInt(cursor.getColumnIndex(ClassKeeperDBSchema.MentorTable.Columns.ID)),
+                       courseID,
+                       cursor.getString(cursor.getColumnIndex(ClassKeeperDBSchema.MentorTable.Columns.NAME)),
+                       cursor.getString(cursor.getColumnIndex(ClassKeeperDBSchema.MentorTable.Columns.PHONE_NUMBER))
+               );
+               mentors.add(mentor);
+            }
+         }
+      }
+      cursor.close();
+      return mentors;
+   }
+
    public static Uri insertMentor(Context context, Mentor mentor) {
       ContentValues insertionValues = new ContentValues();
       insertionValues.put(ClassKeeperDBSchema.MentorTable.Columns.COURSE_ID, mentor.getCourseID());
@@ -246,6 +373,14 @@ public class DatabaseQueryBank {
       insertionValues.put(ClassKeeperDBSchema.MentorTable.Columns.PHONE_NUMBER, mentor.getPhoneNumber());
       return context.getContentResolver()
               .insert(MENTOR_TABLE_URI, insertionValues);
+   }
+
+   public static int updateMentor(Context context, Mentor mentor) {
+      ContentValues insertionValues = new ContentValues();
+      insertionValues.put(ClassKeeperDBSchema.MentorTable.Columns.NAME, mentor.getName());
+      insertionValues.put(ClassKeeperDBSchema.MentorTable.Columns.PHONE_NUMBER, mentor.getPhoneNumber());
+      return context.getContentResolver()
+              .update(MENTOR_TABLE_URI, insertionValues, ClassKeeperDBSchema.MentorTable.Columns.ID + " = " + mentor.getID(), null);
    }
 
    public static boolean deleteMentorByID(Context context, int mentorID) {

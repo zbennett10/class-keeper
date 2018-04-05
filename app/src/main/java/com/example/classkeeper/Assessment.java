@@ -19,6 +19,13 @@ public class Assessment {
         this.dueDate = dueDate;
     }
 
+    public Assessment(int courseID, String type, String title, String dueDate) {
+        this.courseID = courseID;
+        this.type = type;
+        this.title = title;
+        this.dueDate = dueDate;
+    }
+
     public int getID() {
         return this.id;
     }

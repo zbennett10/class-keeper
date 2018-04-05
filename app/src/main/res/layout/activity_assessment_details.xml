@@ -7,7 +7,7 @@
     tools:context="com.example.classkeeper.AssessmentDetails">
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/AssessmentTitleView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -25,22 +25,22 @@
         android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="32dp"
         android:text="Due Date: "
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
-        app:layout_constraintBottom_toBottomOf="@+id/editText"
-        app:layout_constraintEnd_toStartOf="@+id/editText" />
+        app:layout_constraintBottom_toBottomOf="@+id/AssessmentDueDateView"
+        app:layout_constraintEnd_toStartOf="@+id/AssessmentDueDateView" />
 
-    <EditText
-        android:id="@+id/editText"
+    <TextView
+        android:id="@+id/AssessmentDueDateView"
         android:layout_width="wrap_content"
         android:layout_height="46dp"
         android:layout_marginEnd="44dp"
-        android:layout_marginTop="116dp"
+        android:layout_marginTop="128dp"
         android:ems="10"
         android:inputType="date"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+        app:layout_constraintTop_toBottomOf="@+id/AssessmentTitleView" />
 
     <TextView
         android:id="@+id/textView16"
@@ -50,20 +50,20 @@
         android:layout_marginEnd="8dp"
         android:text="Type: "
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintBottom_toBottomOf="@+id/spinner2"
-        app:layout_constraintEnd_toStartOf="@+id/spinner2" />
+        app:layout_constraintBottom_toBottomOf="@+id/AssessmentTypeView"
+        app:layout_constraintEnd_toStartOf="@+id/AssessmentTypeView" />
 
-    <Spinner
-        android:id="@+id/spinner2"
+    <TextView
+        android:id="@+id/AssessmentTypeView"
         android:layout_width="213dp"
         android:layout_height="41dp"
         android:layout_marginEnd="44dp"
         android:layout_marginTop="212dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+        app:layout_constraintTop_toBottomOf="@+id/AssessmentTitleView" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/SetAssessmentAlertBtn"
         android:layout_width="167dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="48dp"

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.classkeeper">
-    
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SET_ALARM" />
@@ -13,12 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <provider
             android:name=".ClassKeeperDataProvider"
             android:authorities="com.example.classkeeper.classkeeperdataprovider"
-            android:exported="true"
-            />
+            android:exported="true" />
 
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -33,7 +31,15 @@
         <activity android:name=".CourseDetails" />
         <activity android:name=".AssessmentListView" />
         <activity android:name=".AssessmentDetails" />
-        <activity android:name=".AddTermView"></activity>
+        <activity android:name=".AddTermView" />
+        <activity android:name=".AddCourseView" />
+        <activity android:name=".AddAssessmentView" />
+        <activity android:name=".CourseMentorsView" />
+        <activity android:name=".AddCourseMentorView" />
+        <activity android:name=".CourseNotesView" />
+        <activity android:name=".AddCourseNotesView" />
+        <activity android:name=".NoteView" />
+        <activity android:name=".MentorView"></activity>
     </application>
 
 </manifest>

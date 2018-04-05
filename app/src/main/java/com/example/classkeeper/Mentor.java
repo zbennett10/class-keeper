@@ -17,6 +17,12 @@ public class Mentor {
         this.phoneNumber = phoneNumber;
     }
 
+    public Mentor(int courseID, String name, String phoneNumber) {
+        this.courseID = courseID;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+    }
+
     public int getID() {
         return this.id;
     }
