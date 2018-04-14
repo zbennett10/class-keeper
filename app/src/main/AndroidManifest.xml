@@ -18,6 +18,19 @@
             android:authorities="com.example.classkeeper.classkeeperdataprovider"
             android:exported="true" />
 
+        <receiver
+            android:name=".AlertReceiver"
+            android:enabled="true"
+            android:exported="false"/>
+
+        <service
+            android:name=".AssessmentAlertService"
+            android:exported="false"/>
+
+        <service
+            android:name=".CourseAlertService"
+            android:exported="false"/>
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

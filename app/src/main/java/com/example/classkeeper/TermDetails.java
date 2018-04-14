@@ -82,6 +82,8 @@ public class TermDetails extends AppCompatActivity {
                 ArrayList<Course> termCourses = DatabaseQueryBank.getAllCoursesWithTermID(TermDetails.this, termID);
                 if(termCourses.size() < 1) {
                     DatabaseQueryBank.deleteTermByID(TermDetails.this, termID);
+                    Intent intentToViewTermList = new Intent(TermDetails.this, TermListView.class);
+                    startActivity(intentToViewTermList);
                 } else {
                     View rootView = TermDetails.this.getWindow().getDecorView().findViewById(R.id.TermDetailsContent);
                     Snackbar unableToDeleteSnack = Snackbar.make(rootView, "Unable to delete - courses are attached to this term.", Snackbar.LENGTH_SHORT);

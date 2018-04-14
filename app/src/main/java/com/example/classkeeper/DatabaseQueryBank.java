@@ -19,8 +19,6 @@ public class DatabaseQueryBank {
    private static final Uri ASSESSMENT_TABLE_URI = Uri.parse("content://" + AUTHORITY + "/" + ClassKeeperDBSchema.AssessmentTable.NAME);
    private static final Uri NOTE_TABLE_URI = Uri.parse("content://" + AUTHORITY + "/" + ClassKeeperDBSchema.NoteTable.NAME);
    private static final Uri MENTOR_TABLE_URI = Uri.parse("content://" + AUTHORITY + "/" + ClassKeeperDBSchema.MentorTable.NAME);
-   private static final Uri COURSE_ALERTS_TABLE_URI = Uri.parse("content://" + AUTHORITY + "/" + ClassKeeperDBSchema.CourseAlertsTable.NAME);
-   private static final Uri ASSESSMENT_ALERTS_TABLE_URI = Uri.parse("content://" + AUTHORITY + "/" + ClassKeeperDBSchema.AssessmentAlertsTable.NAME);
 
    public static Term getTerm(Context context, int termID) {
       Cursor cursor = context.getContentResolver()
@@ -182,16 +180,6 @@ public class DatabaseQueryBank {
          deleteMentorByID(context, mentorID);
       }
 
-      //delete each course alert associated with this course
-      Cursor courseAlertCursor = context.getContentResolver()
-              .query(COURSE_ALERTS_TABLE_URI, ClassKeeperDBSchema.CourseAlertsTable.Columns.names,
-                      ClassKeeperDBSchema.CourseAlertsTable.Columns.COURSE_ID + " = " + courseID, null, null);
-      while(courseAlertCursor.moveToNext()) {
-         int alertID = courseAlertCursor.getInt(courseAlertCursor.getColumnIndex(ClassKeeperDBSchema.CourseAlertsTable.Columns.ID));
-         deleteCourseAlertByID(context, alertID);
-      }
-
-
       context.getContentResolver()
               .delete(COURSE_TABLE_URI, ClassKeeperDBSchema.CourseTable.Columns.ID + " = " + courseID, null);
       return true;
@@ -258,14 +246,6 @@ public class DatabaseQueryBank {
    }
 
    public static boolean deleteAssessmentByID(Context context, int assessmentID) {
-      //delete each alert associated with this assessment
-      Cursor alertCursor = context.getContentResolver()
-              .query(ASSESSMENT_ALERTS_TABLE_URI, ClassKeeperDBSchema.AssessmentAlertsTable.Columns.names,
-                      ClassKeeperDBSchema.AssessmentAlertsTable.Columns.ASSESSMENT_ID + " = " + assessmentID, null, null);
-      while(alertCursor.moveToNext()) {
-         int alertID = alertCursor.getInt(alertCursor.getColumnIndex(ClassKeeperDBSchema.AssessmentAlertsTable.Columns.ID));
-         deleteAssessmentAlertByID(context, alertID);
-      }
       context.getContentResolver()
               .delete(ASSESSMENT_TABLE_URI, ClassKeeperDBSchema.AssessmentTable.Columns.ID + " = " + assessmentID, null);
       return true;
@@ -337,7 +317,8 @@ public class DatabaseQueryBank {
               mentorID,
               cursor.getInt(cursor.getColumnIndex(ClassKeeperDBSchema.MentorTable.Columns.COURSE_ID)),
               cursor.getString(cursor.getColumnIndex(ClassKeeperDBSchema.MentorTable.Columns.NAME)),
-              cursor.getString(cursor.getColumnIndex(ClassKeeperDBSchema.MentorTable.Columns.PHONE_NUMBER))
+              cursor.getString(cursor.getColumnIndex(ClassKeeperDBSchema.MentorTable.Columns.PHONE_NUMBER)),
+              cursor.getString(cursor.getColumnIndex(ClassKeeperDBSchema.MentorTable.Columns.EMAIL_ADDRESS))
       );
       cursor.close();
       return mentor;
@@ -356,7 +337,8 @@ public class DatabaseQueryBank {
                        cursor.getInt(cursor.getColumnIndex(ClassKeeperDBSchema.MentorTable.Columns.ID)),
                        courseID,
                        cursor.getString(cursor.getColumnIndex(ClassKeeperDBSchema.MentorTable.Columns.NAME)),
-                       cursor.getString(cursor.getColumnIndex(ClassKeeperDBSchema.MentorTable.Columns.PHONE_NUMBER))
+                       cursor.getString(cursor.getColumnIndex(ClassKeeperDBSchema.MentorTable.Columns.PHONE_NUMBER)),
+                       cursor.getString(cursor.getColumnIndex(ClassKeeperDBSchema.MentorTable.Columns.EMAIL_ADDRESS))
                );
                mentors.add(mentor);
             }
@@ -371,6 +353,7 @@ public class DatabaseQueryBank {
       insertionValues.put(ClassKeeperDBSchema.MentorTable.Columns.COURSE_ID, mentor.getCourseID());
       insertionValues.put(ClassKeeperDBSchema.MentorTable.Columns.NAME, mentor.getName());
       insertionValues.put(ClassKeeperDBSchema.MentorTable.Columns.PHONE_NUMBER, mentor.getPhoneNumber());
+      insertionValues.put(ClassKeeperDBSchema.MentorTable.Columns.EMAIL_ADDRESS, mentor.getEmailAddress());
       return context.getContentResolver()
               .insert(MENTOR_TABLE_URI, insertionValues);
    }
@@ -379,6 +362,7 @@ public class DatabaseQueryBank {
       ContentValues insertionValues = new ContentValues();
       insertionValues.put(ClassKeeperDBSchema.MentorTable.Columns.NAME, mentor.getName());
       insertionValues.put(ClassKeeperDBSchema.MentorTable.Columns.PHONE_NUMBER, mentor.getPhoneNumber());
+      insertionValues.put(ClassKeeperDBSchema.MentorTable.Columns.EMAIL_ADDRESS, mentor.getEmailAddress());
       return context.getContentResolver()
               .update(MENTOR_TABLE_URI, insertionValues, ClassKeeperDBSchema.MentorTable.Columns.ID + " = " + mentor.getID(), null);
    }
@@ -389,63 +373,4 @@ public class DatabaseQueryBank {
       return true;
    }
 
-   public static CourseAlert getCourseAlert(Context context, int courseAlertID) {
-      Cursor cursor = context.getContentResolver()
-              .query(COURSE_ALERTS_TABLE_URI, ClassKeeperDBSchema.CourseAlertsTable.Columns.names,
-                      ClassKeeperDBSchema.CourseAlertsTable.Columns.ID + " = " + courseAlertID, null, null);
-      cursor.moveToFirst();
-      CourseAlert alert = new CourseAlert(
-              courseAlertID,
-              cursor.getInt(cursor.getColumnIndex(ClassKeeperDBSchema.CourseAlertsTable.Columns.COURSE_ID)),
-              cursor.getString(cursor.getColumnIndex(ClassKeeperDBSchema.CourseAlertsTable.Columns.DATE)),
-              cursor.getString(cursor.getColumnIndex(ClassKeeperDBSchema.CourseAlertsTable.Columns.MESSAGE))
-      );
-      cursor.close();
-      return alert;
-   }
-
-   public static Uri insertCourseAlert(Context context, CourseAlert alert) {
-      ContentValues insertionValues = new ContentValues();
-      insertionValues.put(ClassKeeperDBSchema.CourseAlertsTable.Columns.COURSE_ID, alert.getCourseID());
-      insertionValues.put(ClassKeeperDBSchema.CourseAlertsTable.Columns.DATE, alert.getDate());
-      insertionValues.put(ClassKeeperDBSchema.CourseAlertsTable.Columns.MESSAGE, alert.getMessage());
-      return context.getContentResolver()
-              .insert(COURSE_ALERTS_TABLE_URI, insertionValues);
-   }
-
-   public static boolean deleteCourseAlertByID(Context context, int courseAlertID) {
-      context.getContentResolver()
-              .delete(COURSE_ALERTS_TABLE_URI, ClassKeeperDBSchema.CourseAlertsTable.Columns.ID + " = " + courseAlertID, null);
-      return true;
-   }
-
-   public static AssessmentAlert getAssessmentAlert(Context context, int assessmentAlertID) {
-      Cursor cursor = context.getContentResolver()
-              .query(ASSESSMENT_ALERTS_TABLE_URI, ClassKeeperDBSchema.AssessmentAlertsTable.Columns.names,
-                      ClassKeeperDBSchema.AssessmentAlertsTable.Columns.ID + " = " + assessmentAlertID, null, null);
-      cursor.moveToFirst();
-      AssessmentAlert alert = new AssessmentAlert(
-              assessmentAlertID,
-              cursor.getInt(cursor.getColumnIndex(ClassKeeperDBSchema.AssessmentAlertsTable.Columns.ASSESSMENT_ID)),
-              cursor.getString(cursor.getColumnIndex(ClassKeeperDBSchema.AssessmentAlertsTable.Columns.DATE)),
-              cursor.getString(cursor.getColumnIndex(ClassKeeperDBSchema.AssessmentAlertsTable.Columns.MESSAGE))
-      );
-      cursor.close();
-      return alert;
-   }
-
-   public static Uri insertAssessmentAlert(Context context, AssessmentAlert alert) {
-      ContentValues insertionValues = new ContentValues();
-      insertionValues.put(ClassKeeperDBSchema.AssessmentAlertsTable.Columns.ASSESSMENT_ID, alert.getAssessmentID());
-      insertionValues.put(ClassKeeperDBSchema.AssessmentAlertsTable.Columns.DATE, alert.getDate());
-      insertionValues.put(ClassKeeperDBSchema.AssessmentAlertsTable.Columns.MESSAGE, alert.getMessage());
-      return context.getContentResolver()
-              .insert(ASSESSMENT_ALERTS_TABLE_URI, insertionValues);
-   }
-
-   public static boolean deleteAssessmentAlertByID(Context context, int assessmentAlertID) {
-      context.getContentResolver()
-              .delete(ASSESSMENT_ALERTS_TABLE_URI, ClassKeeperDBSchema.AssessmentAlertsTable.Columns.ID + " = " + assessmentAlertID, null);
-      return true;
-   }
 }

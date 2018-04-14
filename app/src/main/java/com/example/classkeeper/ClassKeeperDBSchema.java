@@ -110,7 +110,8 @@ public class ClassKeeperDBSchema {
             public static final String COURSE_ID = "courseID";
             public static final String NAME = "name";
             public static final String PHONE_NUMBER = "phoneNumber";
-            public static final String[] names = {ID, COURSE_ID, NAME, PHONE_NUMBER};
+            public static final String EMAIL_ADDRESS = "emailAddress";
+            public static final String[] names = {ID, COURSE_ID, NAME, PHONE_NUMBER, EMAIL_ADDRESS};
         }
 
         public static final String CREATE_TABLE =
@@ -119,6 +120,7 @@ public class ClassKeeperDBSchema {
                         Columns.COURSE_ID + " INTEGER, " +
                         Columns.NAME + " TEXT, " +
                         Columns.PHONE_NUMBER + " TEXT, " +
+                        Columns.EMAIL_ADDRESS + " TEXT, " +
                         "FOREIGN KEY(" +
                                 Columns.COURSE_ID + ") REFERENCES " + CourseTable.NAME + "(" + CourseTable.Columns.ID +
                             ")" +

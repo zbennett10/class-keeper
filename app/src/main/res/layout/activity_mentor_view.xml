@@ -6,6 +6,20 @@
     android:layout_height="match_parent"
     tools:context="com.example.classkeeper.MentorView">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/MentorViewAppBar"
+        android:layout_width="447dp"
+        android:layout_height="38dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
     <Button
         android:id="@+id/SaveMentorBtn"
         android:layout_width="wrap_content"
@@ -19,21 +33,21 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
+        android:id="@+id/linearLayout5"
         android:layout_width="368dp"
-        android:layout_height="287dp"
+        android:layout_height="245dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="76dp"
+        android:layout_marginTop="8dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/MentorViewAppBar">
 
         <EditText
             android:id="@+id/EditMentorNameInput"
             android:layout_width="match_parent"
-            android:layout_height="128dp"
+            android:layout_height="76dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:ems="10"
@@ -45,9 +59,16 @@
             tools:layout_editor_absoluteY="120dp" />
 
         <EditText
+            android:id="@+id/EditMentorEmailAdressInput"
+            android:layout_width="358dp"
+            android:layout_height="61dp"
+            android:ems="10"
+            android:inputType="textEmailAddress" />
+
+        <EditText
             android:id="@+id/EditMentorPhoneNumberInput"
             android:layout_width="match_parent"
-            android:layout_height="122dp"
+            android:layout_height="70dp"
             android:layout_marginBottom="136dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
@@ -59,5 +80,6 @@
             app:layout_constraintHorizontal_bias="0.503"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editText" />
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

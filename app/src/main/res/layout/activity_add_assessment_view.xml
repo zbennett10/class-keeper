@@ -8,15 +8,18 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="425dp"
-        android:layout_marginBottom="68dp"
+        android:layout_height="272dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="16dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="137dp"
+            android:layout_height="78dp"
             android:orientation="horizontal">
 
             <TextView
@@ -26,7 +29,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
-                android:text="TextView"
+                android:text="Title"
                 app:layout_constraintEnd_toStartOf="@+id/AssessmentTitleInput"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:layout_editor_absoluteY="89dp" />
@@ -48,7 +51,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="143dp"
+            android:layout_height="76dp"
             android:orientation="horizontal">
 
             <TextView
@@ -58,7 +61,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
-                android:text="TextView"
+                android:text="Due Date"
                 app:layout_constraintEnd_toStartOf="@+id/AssessmentDueDateInput"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:layout_editor_absoluteY="170dp" />
@@ -80,7 +83,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="156dp"
+            android:layout_height="80dp"
             android:orientation="horizontal">
 
             <TextView
@@ -90,7 +93,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="24dp"
                 android:layout_weight="1"
-                android:text="TextView"
+                android:text="Assessment Type"
                 app:layout_constraintEnd_toStartOf="@+id/AssessmentTypeInput"
                 app:layout_constraintHorizontal_bias="0.35"
                 app:layout_constraintStart_toStartOf="parent"

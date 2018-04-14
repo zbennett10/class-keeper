@@ -9,18 +9,21 @@ public class Mentor {
     private int courseID;
     private String name;
     private String phoneNumber;
+    private String emailAddress;
 
-    public Mentor(int id, int courseID, String name, String phoneNumber) {
+    public Mentor(int id, int courseID, String name, String phoneNumber, String emailAddress) {
         this.id = id;
         this.courseID = courseID;
         this.name = name;
         this.phoneNumber = phoneNumber;
+        this.emailAddress = emailAddress;
     }
 
-    public Mentor(int courseID, String name, String phoneNumber) {
+    public Mentor(int courseID, String name, String phoneNumber, String emailAddress) {
         this.courseID = courseID;
         this.name = name;
         this.phoneNumber = phoneNumber;
+        this.emailAddress = emailAddress;
     }
 
     public int getID() {
@@ -38,4 +41,6 @@ public class Mentor {
     public String getPhoneNumber() {
        return this.phoneNumber;
     }
+
+    public String getEmailAddress() { return this.emailAddress; }
 }

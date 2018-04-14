@@ -6,26 +6,34 @@
     android:layout_height="match_parent"
     tools:context="com.example.classkeeper.CourseDetails">
 
-    <TextView
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/CourseDetailsAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <EditText
         android:id="@+id/CourseDetailsTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:text="Course Title"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/CourseDetailsAppBar" />
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginStart="60dp"
         android:text="Start"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/CourseDetailsTitle" />
@@ -34,100 +42,117 @@
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="120dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginEnd="64dp"
         android:text="End"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/CourseDetailsTitle" />
 
-    <TextView
+    <EditText
         android:id="@+id/CourseDetailsStart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="88dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
         android:text="Start Date"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
-    <TextView
+    <EditText
         android:id="@+id/CourseDetailsEnd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="100dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginTop="4dp"
         android:text="End Date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout4"
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="104dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <Button
-            android:id="@+id/ViewNotesBtn"
+        <LinearLayout
+            android:id="@+id/linearLayout4"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="133dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="Course Notes"
-            app:layout_constraintBottom_toTopOf="@+id/ViewMentorsBtn"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/CourseDetailsStatus"
-            app:layout_constraintVertical_bias="0.617" />
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/ViewMentorsBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:text="Course Mentors"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="380dp" />
+            <Button
+                android:id="@+id/ViewNotesBtn"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Course Notes"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                app:layout_constraintBottom_toTopOf="@+id/ViewMentorsBtn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/CourseDetailsStatus"
+                app:layout_constraintVertical_bias="0.617" />
 
-        <Button
-            android:id="@+id/ViewAssessmentListBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="View Assessments"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ViewMentorsBtn" />
-    </LinearLayout>
+            <Button
+                android:id="@+id/ViewMentorsBtn"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:text="Course Mentors"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="380dp" />
 
-    <TextView
+            <Button
+                android:id="@+id/ViewAssessmentListBtn"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="View Assessments"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ViewMentorsBtn" />
+
+            <Button
+                android:id="@+id/SaveCourseBtn"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:text="Save Course"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+            <Button
+                android:id="@+id/SetCourseAlertsBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Set Alerts" />
+        </LinearLayout>
+    </ScrollView>
+
+    <Spinner
         android:id="@+id/CourseDetailsStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_width="202dp"
+        android:layout_height="53dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Course Status"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/CourseDetailsTitle"
-        app:layout_constraintVertical_bias="0.618" />
+        tools:layout_editor_absoluteY="185dp" />
 
 </android.support.constraint.ConstraintLayout>
