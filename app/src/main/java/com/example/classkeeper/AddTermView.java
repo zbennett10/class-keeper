@@ -17,8 +17,10 @@ public class AddTermView extends AppCompatActivity {
         setContentView(R.layout.activity_add_term_view);
 
         final EditText titleInput = (EditText) findViewById(R.id.termTitleInput);
-        final DatePicker startInput = (DatePicker) findViewById(R.id.termStartInput);
-        final DatePicker endInput = (DatePicker) findViewById(R.id.termEndInput);
+        final EditText startInput = (EditText) findViewById(R.id.termStartInput);
+        startInput.setText("mm-dd-yyyy");
+        final EditText endInput = (EditText) findViewById(R.id.termEndInput);
+        endInput.setText("mm-dd-yyyy");
         final Button addTermButton = (Button) findViewById(R.id.BTN_ACTION_ADD_TERM);
 
         addTermButton.setOnClickListener(new View.OnClickListener() {
@@ -26,11 +28,8 @@ public class AddTermView extends AppCompatActivity {
             public void onClick(View v) {
                 //get current input title, start and end dates
                 String title = titleInput.getText().toString();
-                System.out.println("Title: " + title);
-                String start = Constants.getTermDateFromDatePicker(startInput);
-                System.out.println("Start: " + start);
-                String end = Constants.getTermDateFromDatePicker(endInput);
-                System.out.println("End: " + end);
+                String start = startInput.getText().toString();
+                String end = endInput.getText().toString();
                 if(!title.isEmpty() && !start.isEmpty() && !end.isEmpty()) {
                     Term newTerm = new Term(title, start, end);
                     DatabaseQueryBank.insertTerm(AddTermView.this, newTerm);

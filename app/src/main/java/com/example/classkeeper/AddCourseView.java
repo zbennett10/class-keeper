@@ -37,7 +37,9 @@ public class AddCourseView extends AppCompatActivity {
 
         final EditText titleInput = (EditText) findViewById(R.id.AddCourseTitleInput);
         final EditText startInput = (EditText) findViewById(R.id.AddCourseStartInput);
+        startInput.setText("mm-dd-yyyy");
         final EditText endInput = (EditText) findViewById(R.id.AddCourseEndInput);
+        endInput.setText("mm-dd-yyyy");
         final Button addCourseButton = (Button) findViewById(R.id.AddCourseToDBBtn);
 
         addCourseButton.setOnClickListener(new View.OnClickListener() {

@@ -45,4 +45,9 @@ public class Assessment {
     public String getDueDate() {
         return this.dueDate;
     }
+
+    @Override
+    public String toString() {
+        return this.title;
+    }
 }

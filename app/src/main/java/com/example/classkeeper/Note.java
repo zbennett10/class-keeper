@@ -31,4 +31,13 @@ public class Note {
    public String getContent() {
        return this.content;
    }
+
+    @Override
+    public String toString() {
+        if(this.content.isEmpty()) {
+            return "<Empty Note>";
+        }
+        int length = this.content.length() < 20 ? this.content.length() : 20;
+        return this.content.substring(0, length) + "...";
+    }
 }

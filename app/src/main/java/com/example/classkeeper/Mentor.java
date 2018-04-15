@@ -43,4 +43,9 @@ public class Mentor {
     }
 
     public String getEmailAddress() { return this.emailAddress; }
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }

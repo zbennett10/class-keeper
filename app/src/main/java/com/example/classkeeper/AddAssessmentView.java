@@ -37,6 +37,7 @@ public class AddAssessmentView extends AppCompatActivity {
 
         final EditText titleInput = (EditText) findViewById(R.id.AssessmentTitleInput);
         final EditText dueDateInput = (EditText) findViewById(R.id.AssessmentDueDateInput);
+        dueDateInput.setText("mm-dd-yyyy");
         final Button addAssessmentBtn = (Button) findViewById(R.id.AddAssessmentToDBBtn);
 
         addAssessmentBtn.setOnClickListener(new View.OnClickListener() {

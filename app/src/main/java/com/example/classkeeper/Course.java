@@ -53,4 +53,9 @@ public class Course {
     public String getStatus() {
         return this.status;
     }
+
+    @Override
+    public String toString() {
+        return this.title;
+    }
 }

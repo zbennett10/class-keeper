@@ -38,4 +38,9 @@ public class Term {
     public String getEnd() {
         return this.end;
     }
+
+    @Override
+    public String toString() {
+        return this.title;
+    }
 }
